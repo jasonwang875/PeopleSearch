@@ -1,0 +1,256 @@
+﻿<style type="text/css">
+    .customer-photo {
+        display: inline-block;
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        background-size: 32px 35px;
+        background-position: center center;
+        vertical-align: middle;
+        line-height: 32px;
+        box-shadow: inset 0 0 1px #999, inset 0 0 10px rgba(0,0,0,.2);
+        margin-left: 5px;
+    }
+
+    .customer-name {
+        display: inline-block;
+        vertical-align: middle;
+        line-height: 32px;
+        padding-left: 3px;
+    }
+
+    .k-window {
+        width: 400px;
+        height: auto;
+    }
+
+    .k-edit-form-container {
+        margin-left: 10px !important;
+        padding: 0 0 0 0 !important;
+        widows: 90% !important;
+    }
+
+
+        .k-edit-form-container .editor-label, .k-edit-label {
+            padding: 0.1em 0 0.1em;
+        }
+</style>
+<script type="text/javascript">
+    $(document).ready(function () {
+        var ApiUrl = "http://localhost:50537/";
+        dataSource = new kendo.data.DataSource({
+            transport: {
+                read:
+                {
+                    url: ApiUrl + "api/GetEmployees",
+                    dataType: "json",
+                },
+                destroy:
+                {
+                    url: ApiUrl + "api/DeleteEmployee",
+                    type: "DELETE"
+                },
+                create:
+                {
+                    url: ApiUrl + "api/AddEmployee",
+                    type: "POST"
+                },
+                update:
+                {
+                    url: ApiUrl + "api/UpdateEmployee",
+                    type: "PUT",
+                    parameterMap: function (options, operation) {
+                        if (operation !== "read" && options.models) {
+                            return {
+                                models: kendo.stringify(options.models)
+                            };
+                        }
+                    }
+                },
+            },
+            schema:
+            {
+                model:
+                {
+                    id: "ID",
+                    fields: {
+                        ID: { editable: false},
+                        FullName: { editable: true, nullable: false, type: "string", validation: { required: true } },
+                        Interests: { editable: true, nullable: false, type: "string", validation: { required: true } },
+                        Phone: { editable: true, nullable: false, type: "string", validation: { required: true } },
+                        Email: { editable: true, nullable: false, type: "string", validation: { required: true } },
+                        Photo: { editable: true, nullable: false, type: "string", validation: { required: false } },
+                        Age: { editable: true, nullable: false, type: "number", validation: { min: 0, required: true } },
+                        Address: { editable: true, nullable: false, type: "string", validation: { required: false } },
+                    }
+                }
+            }
+        });
+        $("#EmployeeGrid").kendoGrid({
+            dataSource: dataSource,
+            editable: "popup",
+            groupable: true,
+            filterable: true,
+            sortable: true,
+            edit: function (e) {
+                e.container.find("input:first").hide();
+                var editWindow = e.container.data("kendoWindow");
+
+                if (e.model.isNew()) {
+                    e.container.data("kendoWindow").title('Add New People');
+                    $(".k-grid-update").text = "Save";
+                }
+                else {
+                    e.container.data("kendoWindow").title('Edit Existed People');
+                }
+
+                e.container.find('.k-grid-update').off().on("click", function (event) {
+                    alert("Updating record, might take a while. Thank you for your patience.");
+                    $(this).attr("disabled", true);
+                    $(this).removeAttr('href');
+                });
+            },
+            toolbar: ["create"],
+            columns: [
+                {
+                    field: "ID",
+                    title: "ID",
+                    width: 25,
+                    filterable: false,
+                },
+                {
+                    field: "Photo",
+                    title: "Photo",
+                    template: "<div class='customer-photo'" +
+                        "style='background-image: url(#:data.Photo#);'></div>",
+                    width: 80,
+                    filterable: false,
+                },
+                {
+                    field: "FullName",
+                    title: "Name",
+                    width: 120,
+                },
+                {
+                    field: "Interests",
+                    title: "Interests",
+                    filterable: { multi: true, search: true },
+                    width: 300,
+                },
+                {
+                    field: "Phone",
+                    title: "Phone",
+                    filterable: true,
+                    width: 150,
+                },
+                {
+                    field: "Email",
+                    title: "Email",
+                    width: 150,
+                    filterable: true
+                },
+                {
+                    field: "Age",
+                    title: "Age",
+                    width: 80,
+                    filterable: true
+                },
+                {
+                    field: "Address",
+                    title: "Address",
+                    width: 200,
+                    filterable: true
+                },
+                {
+                    command: [
+                        {
+                            name: "edit",
+                            text: {
+                                edit: "Edit",               // This is the localization for Edit button
+                                update: "Save",             // This is the localization for Update button
+                                cancel: "Cancel changes"    // This is the localization for Cancel button
+                            }
+                        },
+                        {
+                            name: "destroy",
+                            text: "Remove"           // This is the localization for Delete button
+                        }
+                    ]
+                }
+            ],
+            height: "500px",
+            pageable: {
+                refresh: true,
+                pageSizes: true,
+                buttonCount: 5
+            },
+            pageSize: 20,
+        }).data("kendoGrid");
+
+        var grid = $("#EmployeeGrid").data("kendoGrid");
+        grid.dataSource.pageSize(20);
+        grid.refresh();
+
+        $('<div class="k-loading-mask" style="width: 100%; height: 100%; top: 0px; left: 0px;"><span class="k-loading-text">Loading...</span><div class="k-loading-image"></div><div class="k-loading-color"></div></div>').appendTo('#EmployeeGrid .k-grid-content');
+        $("#search_btn").click(function () {
+            var searchtext = $('#search_text').val();
+            $("#search_results").empty();
+
+            var grid = $('#EmployeeGrid').data('kendoGrid');
+            var field = 'FullName';
+            var operator = 'contains';
+            var value = searchtext;
+            grid.dataSource.filter({
+                field: field,
+                operator: operator,
+                value: value
+            });
+        });
+        $(document).keypress(function (e) {
+            if (e.which == 13) {
+                $("#search_btn").click();
+                e.preventDefault();
+            }
+        });
+        $("#search_text").focus();
+    });
+
+</script>
+<style>
+    .k-window {
+        width: 300px !important;
+    }
+</style>
+
+@using (Html.BeginForm("Index", "Crud", FormMethod.Post, new { id = "EmployeeDetails" }))
+{
+    <div class="row">
+        <div class="col-lg-12">
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-12">
+            <div id="search_container">
+                <h1 class="search-title"><span class="glyphicon glyphicon-user"></span>   Health Catalyst People Search</h1>
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div id="result_container">
+                            <hr />
+                            <div id="search_results" class="list-group">
+                                <h5><em>Use the below search bar to find people by name</em></h5>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="input-group stylish-input-group">
+                    <input id="search_text" type="text">
+                    <button id="search_btn" type="button">
+                        <span class="glyphicon glyphicon-search"></span> Search
+                    </button>
+                </div>
+                <br />
+            </div>
+        </div>
+    </div>
+    <div id="EmployeeGrid" style="width: 1250px;"></div>
+}

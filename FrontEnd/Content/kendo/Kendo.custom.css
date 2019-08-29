@@ -1,0 +1,202 @@
+﻿.k-grid td {
+    border-width: 0;
+    padding: 5px;
+    line-height: 1.2em;
+}
+
+.k-window {
+    width: 1000px;
+    height: auto;
+    overflow: hidden;
+}
+
+    .k-window div.k-window-content {
+        overflow: hidden;
+    }
+
+.ContextMenu {
+    min-width: 200px;
+}
+
+.hilighted {
+    color: blue;
+}
+
+.k-edit-form-container {
+    width: 98%;
+}
+
+.k-textbox > input,
+.k-autocomplete .k-input,
+.k-picker-wrap .k-input,
+.k-numeric-wrap .k-input,
+.k-dropdown-wrap .k-input,
+.k-selectbox .k-input {
+    height: 1.2em;
+    line-height: 1.4em;
+}
+
+:root * > .k-icon,
+:root * > .k-sprite,
+:root * > .k-button-group .k-tool-icon {
+    vertical-align: baseline;
+}
+
+.k-edit-label, k-editor-dropdown {
+    width: 98%;
+    text-align: left;
+}
+
+.k-popup-edit-form .k-edit-field {
+    width: 98%;
+    text-align: left;
+}
+
+    .k-popup-edit-form .k-edit-field > .k-textbox, .k-popup-edit-form .k-edit-field > .k-widget {
+        width: 98%;
+    }
+
+.k-input[readonly] {
+    background-color: #eae8e8;
+    color: #2e2e2e;
+}
+
+.k-input, .k-multiselect-wrap, .k-textbox > input, input.k-textbox, input.k-textbox:hover, textarea.k-textbox, textarea.k-textbox:hover {
+    background-color: #eae8e8;
+    color: #2e2e2e;
+}
+
+.k-textbox:hover, .k-tiles li.k-state-hover {
+    border-color: #b6b6b6;
+}
+
+.FNClick {
+    color: #2288cc;
+}
+
+    .FNClick:hover {
+        cursor: pointer;
+    }
+
+.containerbox {
+    background-color: #fff;
+    font-family: Roboto,Arial,Helvetica,sans-serif;
+    line-height: 1.231;
+    font-weight: 400;
+    font-size: 14px;
+    color: #34495E;
+    padding: 30px;
+}
+
+.DetailsBox {
+    font-family: 'Open Sans', sans-serif !important;
+    -webkit-font-smoothing: antialiased;
+    color: #2e2e2e;
+}
+
+    .DetailsBox label {
+        font-size: 14px !important;
+        font-weight: 400 !important;
+        color: #2e2e2e !important;
+    }
+
+    .DetailsBox .k-input {
+        width: 95%;
+        padding-left: 5px;
+    }
+
+.container {
+    padding-left: 0px !important;
+}
+
+.k-edit-form-container .editor-field {
+    float: right;
+    clear: right;
+    width: 100%;
+    margin-right: 2%;
+    padding: 0 0 .6em;
+}
+
+.k-input {
+    width: 100%;
+}
+
+.k-radio-label, k-checkbox-label {
+    line-height: 15px;
+    padding-left: 2.5em;
+}
+
+.k-Customdropdown {
+    background-image: url(textures/highlight.png);
+    background-image: none,-webkit-gradient(linear,left top,left bottom,from(rgba(255,255,255,.6)),to(rgba(255,255,255,0)));
+    background-image: none,-webkit-linear-gradient(top,rgba(255,255,255,.6) 0,rgba(255,255,255,0) 100%);
+    background-image: none,linear-gradient(to bottom,rgba(255,255,255,.6) 0,rgba(255,255,255,0) 100%);
+    background-position: 50% 50%;
+    background-color: #eae8e8;
+    padding: 4px;
+    float: left;
+    text-align: left;
+    width: 91%;
+    height: 1.2em;
+    margin-left: -7px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+}
+
+    .k-Customdropdown:hover {
+        background-color: #bdb4af;
+        background-image: url(textures/highlight.png);
+        background-image: none,-webkit-gradient(linear,left top,left bottom,from(rgba(255,255,255,.4)),to(rgba(255,255,255,0)));
+        background-image: none,-webkit-linear-gradient(top,rgba(255,255,255,.4) 0,rgba(255,255,255,0) 100%);
+        background-image: none,linear-gradient(to bottom,rgba(255,255,255,.4) 0,rgba(255,255,255,0) 100%);
+        background-position: 50% 50%;
+        border-color: #b6b6b6;
+    }
+
+.k-editor-textarea {
+    height: 70px;
+    border: 1px solid #8bc4dd;
+    width:91%;
+}
+
+.k-submit {
+    float: right;
+    margin-right: 20px;
+    margin-top: 15px;
+}
+
+#Grid .k-grid-content {
+    height: 125px !important;
+}
+
+.custom_radio_css {
+    width: 9%;
+    float: left;
+}
+
+.k-edit-field {
+    width: 100%;
+}
+.k-datepicker {
+    width: 95%;
+}
+/*.custom_radio_css + span
+	{
+		float:left;
+		margin-right:10px;
+	}*/
+.col-md-6 {
+    width: 46%;
+}
+/*start modal_popup*/
+.modal_popup {
+    color: red;
+    font-size: 14px;
+    font-weight: bold;
+    text-align: center;
+    padding-top: 39px !important;
+}
+.wnd_title {
+
+}
+/*end modal_popup*/
